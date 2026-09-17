@@ -1,0 +1,30 @@
+# Prism — Theme and contrast workbench
+
+This document defines the behavior and acceptance criteria. All demonstration data is synthetic. The demo runs without a login or API key.
+
+## Product and visual design
+A colorful but disciplined design studio with a large realistic component preview, swatch rail and live type scale. Give light/dark theme meaningful separate values. Contrast scores must describe actual rendered foreground/background pairs, not decorative palette scores.
+
+## Model and rules
+Theme v1 {name,mode,tokens:{background,surface,text,muted,accent,accentText,border},fontScale}. Tokens are six-digit opaque sRGB hex only; scale0.85..1.4 finite. WCAG relative luminance uses sRGB piecewise0.04045 and contrast (Llight+.05)/(Ldark+.05). Text normal AA4.5:1, large3:1 with actual size/weight requirement described; AAA7:1 normal. Ratio rounding never changes pass decision. Solid colors only; no automated accessibility certification.
+
+## Required behavior
+1. At least3 attractive presets with separate light/dark values, editable native color pickers plus hex inputs, name and text scale controls. Invalid partial hex remains draft and shows error on commit without corrupting saved theme.
+2. Real preview of navigation, content card, form field, primary button and muted text uses exact active tokens. Contrast panel tests text/background, text/surface, muted/surface and accentText/accent. Display ratio, requirement and pass/fail in text.
+3. Undo/redo for committed edits or reset-to-preset with confirmation-free obvious action. Preset switch cleanly changes all tokens; mode switching preserves each mode's edited values.
+4. Export validated CSS custom properties and JSON; import JSON <=32KiB with strict schema, reject extra dangerous properties/name injection. Theme names rendered as text and never interpolated into CSS selectors.
+5. Local save uses versioned validated data, storage failure warning and reset fallback. Keyboard/mobile/reduced-motion support.
+6. Optional suggest readable foreground can choose black/white by greater actual contrast; explicitly applies on click, never silently modifies user palette.
+7. CSS export has predictable scope (:root or data-theme selector using known enum only), semicolon-safe validated values and sufficient docs to reproduce preview.
+
+## Acceptance tests
+- P1: black/white21:1, same color1:1, known WCAG pair; piecewise threshold and ratio symmetry.
+- P2: AA threshold compare unrounded; invalid hex, NaN and out-of-range scale rejected.
+- P3: preview pair definitions match exported tokens; import/export roundtrip; malicious name cannot inject CSS.
+- P4: separate mode edits persist, preset/reset/undo redo behavior; corrupt storage recovers.
+- P5 browser: change picker/hex/scale, create failing contrast, apply foreground suggestion, toggle mode, export and reimport.
+## Documentation
+WCAG formula/source, assessed pairs, normal/large-text distinction, limits of contrast-only checks, token integration example, architecture and asset provenance.
+
+## Completion gate
+Implement the behavior and acceptance tests above; document any deliberate limitation. `npm run check` and `npm run test:e2e` must pass. Independently review the code and exercise the production build before release. Verify the public demo at its GitHub repository subpath.

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "name": "Orchard",
+  "mode": "dark",
+  "tokens": {
+    "background": "#141F19",
+    "surface": "#213128",
+    "text": "#EDF4EB",
+    "muted": "#BACABC",
+    "accent": "#BAD7A5",
+    "accentText": "#17251B",
+    "border": "#536757"
+  },
+  "fontScale": 1
+}

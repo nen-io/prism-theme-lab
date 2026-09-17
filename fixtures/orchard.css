@@ -1,0 +1,21 @@
+[data-theme="light"] {
+  --prism-background: #EEF2EC;
+  --prism-surface: #FFFFFF;
+  --prism-text: #253B2D;
+  --prism-muted: #56675A;
+  --prism-accent: #305C45;
+  --prism-accent-text: #FFFFFF;
+  --prism-border: #C9D5C9;
+  --prism-font-scale: 1;
+}
+
+[data-theme="dark"] {
+  --prism-background: #141F19;
+  --prism-surface: #213128;
+  --prism-text: #EDF4EB;
+  --prism-muted: #BACABC;
+  --prism-accent: #BAD7A5;
+  --prism-accent-text: #17251B;
+  --prism-border: #536757;
+  --prism-font-scale: 1;
+}
