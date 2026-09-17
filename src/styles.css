@@ -2140,3 +2140,30 @@ input {
     display: none;
   }
 }
+
+.pair-actions {
+  margin-top: 1rem;
+  border-top: 1px solid var(--line, #d8e0d4);
+  padding-top: 0.8rem;
+  display: grid;
+  gap: 0.6rem;
+}
+.pair-actions > button {
+  width: 100%;
+  justify-content: space-between;
+}
+.pair-remedy {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.7rem;
+  background: #f8f1e6;
+  color: #59411f;
+  border-radius: 0.5rem;
+}
+.pair-remedy small {
+  line-height: 1.5;
+}
+.pair-remedy button {
+  background: #fff;
+  color: #263e2d;
+}

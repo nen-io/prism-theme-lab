@@ -61,17 +61,26 @@ export default function App() {
       if (generation === importGeneration.current) setImporting(false);
     }
   }
-  function download(kind: 'css' | 'json') {
+  function download(kind: 'css' | 'json' | 'both') {
     try {
-      const data = kind === 'css' ? exportCss(theme) : exportJson(theme);
-      const blob = new Blob([data], { type: kind === 'css' ? 'text/css' : 'application/json' });
+      const data =
+        kind === 'both'
+          ? exportCss(editor.current.modes.light) + '\n' + exportCss(editor.current.modes.dark)
+          : kind === 'css'
+            ? exportCss(theme)
+            : exportJson(theme);
+      const blob = new Blob([data], { type: kind === 'json' ? 'application/json' : 'text/css' });
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = `prism-${theme.mode}.${kind}`;
+      anchor.download = kind === 'both' ? 'prism-both.css' : `prism-${theme.mode}.${kind}`;
       anchor.click();
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-      setExportNotice(`${kind.toUpperCase()} exported for the committed ${theme.mode} theme.`);
+      setExportNotice(
+        kind === 'both'
+          ? 'CSS exported for both committed modes.'
+          : `${kind.toUpperCase()} exported for the committed ${theme.mode} theme.`,
+      );
     } catch (error) {
       dispatch({ type: 'error', text: (error as Error).message });
     }
@@ -286,6 +295,16 @@ export default function App() {
         </div>
         <ContrastPanel
           theme={theme}
+          onEdit={(key) => {
+            const field = document.getElementById(`token-${key}`);
+            field?.focus({ preventScroll: true });
+            field?.scrollIntoView({
+              block: 'center',
+              behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? 'instant'
+                : 'smooth',
+            });
+          }}
           onApply={(key, value) => apply({ type: 'token', key, value })}
         />
         <section className="export-section">
@@ -308,10 +327,10 @@ export default function App() {
             <button onClick={() => download('json')}>
               Export JSON <span aria-hidden="true">↗</span>
             </button>
+            <button onClick={() => download('both')}>Download both modes</button>
             <small>
-              Exports the active mode.
-              <br />
-              Switch modes to export its pair.
+              CSS and JSON export the active mode. Both modes combines your light and dark CSS in
+              one file.
             </small>
           </div>
         </section>

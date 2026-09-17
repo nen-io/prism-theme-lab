@@ -1,10 +1,12 @@
-import { assess, bestForeground, contrast } from '../domain/contrast';
+import { assess, bestForeground, contrast, foregroundSuggestion } from '../domain/contrast';
 import type { Theme, TokenKey } from '../domain/theme';
 export function ContrastPanel({
   theme,
   onApply,
+  onEdit,
 }: {
   theme: Theme;
+  onEdit: (key: TokenKey) => void;
   onApply: (key: TokenKey, value: string) => void;
 }) {
   const pairs = assess(theme);
@@ -23,50 +25,83 @@ export function ContrastPanel({
         </span>
       </div>
       <div className="contrast-grid">
-        {pairs.map((pair) => (
-          <article className="contrast-card" key={pair.id} data-testid={`contrast-${pair.id}`}>
-            <div className="contrast-card-top">
-              <span
-                className="pair-sample"
-                style={{
-                  color: theme.tokens[pair.foreground],
-                  backgroundColor: theme.tokens[pair.background],
-                }}
-                aria-hidden="true"
-              >
-                Aa
-              </span>
-              <span className={`result-tag ${pair.normalAA ? 'pass' : 'fail'}`}>
-                {pair.normalAA ? 'AA PASS' : 'AA FAIL'}
-              </span>
-            </div>
-            <h3>{pair.title}</h3>
-            <div className="ratio">
-              <strong>{pair.ratio.toFixed(2)}</strong>
-              <span>: 1</span>
-            </div>
-            <div className="pair-description">
-              <code>{pair.foreground}</code>
-              <span>on</span>
-              <code>{pair.background}</code>
-            </div>
-            <p>{pair.example}</p>
-            <ul>
-              <li>
-                <span>Normal AA · ≥4.5</span>
-                <strong>{pair.normalAA ? 'Pass' : 'Fail'}</strong>
-              </li>
-              <li>
-                <span>Large AA · ≥3.0</span>
-                <strong>{pair.largeAA ? 'Pass' : 'Fail'}</strong>
-              </li>
-              <li>
-                <span>Normal AAA · ≥7.0</span>
-                <strong>{pair.normalAAA ? 'Pass' : 'Fail'}</strong>
-              </li>
-            </ul>
-          </article>
-        ))}
+        {pairs.map((pair) => {
+          const suggestion = foregroundSuggestion(theme, pair.foreground);
+          const siblings = suggestion.pairs.filter((item) => item.id !== pair.id);
+          return (
+            <article className="contrast-card" key={pair.id} data-testid={`contrast-${pair.id}`}>
+              <div className="contrast-card-top">
+                <span
+                  className="pair-sample"
+                  style={{
+                    color: theme.tokens[pair.foreground],
+                    backgroundColor: theme.tokens[pair.background],
+                  }}
+                  aria-hidden="true"
+                >
+                  Aa
+                </span>
+                <span className={`result-tag ${pair.normalAA ? 'pass' : 'fail'}`}>
+                  {pair.normalAA ? 'AA PASS' : 'AA FAIL'}
+                </span>
+              </div>
+              <h3>{pair.title}</h3>
+              <div className="ratio">
+                <strong>{pair.ratio.toFixed(2)}</strong>
+                <span>: 1</span>
+              </div>
+              <div className="pair-description">
+                <code>{pair.foreground}</code>
+                <span>on</span>
+                <code>{pair.background}</code>
+              </div>
+              <p>{pair.example}</p>
+              <ul>
+                <li>
+                  <span>Normal AA · ≥4.5</span>
+                  <strong>{pair.normalAA ? 'Pass' : 'Fail'}</strong>
+                </li>
+                <li>
+                  <span>Large AA · ≥3.0</span>
+                  <strong>{pair.largeAA ? 'Pass' : 'Fail'}</strong>
+                </li>
+                <li>
+                  <span>Normal AAA · ≥7.0</span>
+                  <strong>{pair.normalAAA ? 'Pass' : 'Fail'}</strong>
+                </li>
+              </ul>
+              <div className="pair-actions">
+                <button onClick={() => onEdit(pair.foreground)}>
+                  Edit {pair.foreground} color <span aria-hidden="true">↗</span>
+                </button>
+                {!pair.normalAA && (
+                  <div className="pair-remedy">
+                    {siblings.length > 0 && (
+                      <small>
+                        Also changes {siblings.map((item) => item.title).join(' and ')}.
+                      </small>
+                    )}
+                    <small>
+                      {suggestion.pairs
+                        .map((item) => `${item.title}: ${item.ratio.toFixed(2)}:1`)
+                        .join(' · ')}
+                    </small>
+                    {suggestion.allPass ? (
+                      <button onClick={() => onApply(pair.foreground, suggestion.color)}>
+                        Use {suggestion.color}
+                      </button>
+                    ) : (
+                      <small>
+                        No black/white choice passes every shared pair. Adjust the foreground or
+                        backgrounds.
+                      </small>
+                    )}
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
       <div className="contrast-footnote">
         <p>

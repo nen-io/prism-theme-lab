@@ -21,3 +21,7 @@ Partial or invalid hex remains visible as a draft, with an error on commit; cano
 ## Mobile, text scaling and motion
 
 At narrow widths the preset row becomes a vertical list, toolbar wraps, and the palette rail precedes the preview; contrast cards stack. All grids allow shrink/wrap at 320px. Controls and headings use rem/em units and content-driven heights. 200% text growth must not clip controls. Every input has a visible label, focus rings are clear, keyboard activation is native, the preview is a labelled region, and status is announced without moving focus. Reduced motion removes decorative transitions. No task depends on animation.
+
+## Contrast refinement
+
+Each assessment now ends with an Edit color action, keeping the measured failure connected to its control. Failing cards show a warm inset explanation of the candidate and shared token effects; the main palette stays fixed-color and legible. The mobile jump focuses the exact field and brings it into view, with reduced-motion support. A third export control packages both modes without disrupting the existing active-mode controls. `screenshots/contrast-repair.png` shows a deliberately failing shared text token before the explicit correction.

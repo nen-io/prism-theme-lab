@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   assess,
   bestForeground,
+  foregroundSuggestion,
   contrast,
   linearize,
   luminance,
@@ -221,4 +222,20 @@ describe('local persistence', () => {
     expect(saveWorkspace(blocked, presetWorkspace())).toContain('unavailable');
     expect(loadWorkspace(memoryStorage()).warning).toBe('');
   });
+});
+
+it('suggestions account for every surface sharing a token without promising an impossible repair', () => {
+  const current = theme();
+  current.tokens.text = '#FFFFFF';
+  const suggestion = foregroundSuggestion(current, 'text');
+  expect(suggestion.color).toBe('#000000');
+  expect(suggestion.allPass).toBe(true);
+  expect(suggestion.pairs.map((pair) => pair.id)).toEqual(['page', 'card']);
+  current.tokens.background = '#000000';
+  current.tokens.surface = '#FFFFFF';
+  const impossible = foregroundSuggestion(current, 'text');
+  expect(impossible.allPass).toBe(false);
+  expect(Math.min(...impossible.pairs.map((pair) => pair.ratio))).toBe(1);
+  expect(() => foregroundSuggestion(current, 'border')).toThrow();
+  expect(current.tokens.text).toBe('#FFFFFF');
 });

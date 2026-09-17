@@ -34,3 +34,7 @@ Cloud collaboration would introduce fundamentally new trust and consistency boun
 ## How to measure responsibly
 
 A useful future benchmark would record browser/version, CPU/device, token/pair/history counts, input trace, cold/warm conditions, interaction latency percentiles, memory and persistence failures. The current build and test durations do not measure user-facing capacity and are not presented as performance evidence.
+
+## Refinement resource cost
+
+The suggestion helper evaluates two candidates across the existing four measured pairs. Related-pair scanning remains a fixed small bound; it introduces no palette search or background work. Exporting both modes creates at most two fixed-size token blocks in one Blob, with the existing URL revocation lifecycle. Theme/history/import limits are unchanged.

@@ -72,3 +72,7 @@ Checked 17 September 2026:
 - [Prettier installation](https://prettier.io/docs/install) — pinned formatter.
 
 Exact package versions and resolved dependencies are recorded in package.json and package-lock.json. Node 24.19.0 was used for local verification. No framework requirement is inferred from a private project.
+
+## Contrast-to-edit and paired export
+
+`foregroundSuggestion` derives the related measured pairs from the existing PAIRS table and evaluates only two fixed candidates. `ContrastPanel` renders projected effects; App routes explicit selection through the existing editor reducer. Edit-color actions target known token input IDs, focus first and scroll with reduced-motion handling. No theme mutation occurs on navigation. Both-mode CSS export calls `exportCss` separately for each committed mode and joins the outputs; single-mode JSON import/export remains unchanged.

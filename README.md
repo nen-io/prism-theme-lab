@@ -24,9 +24,9 @@ Open `http://127.0.0.1:4306`. No login, API key, backend, external font or netwo
 1. Choose **Orchard**, **After hours** or **Terracotta**. Each has independently designed light and dark tokens.
 2. Edit **Accent** with a native picker or a six-digit hex value. Hex changes apply on Enter or blur; invalid drafts stay visible without changing the theme.
 3. Give **On accent** the same color. The button and its measured ratio become unreadable: **1.00:1, AA fail**.
-4. Apply the explicit black/white foreground suggestion. The button preview and score update together.
+4. Each contrast card links to its exact color field. A failing pair offers a black/white suggestion only when every measured pair sharing that foreground can pass; the projected ratios make shared effects explicit. Apply a suggestion and undo it to compare.
 5. Switch to dark mode, edit it, and return to light. Your light edits remain. Undo/redo tracks up to 50 committed edits; reset restores both preset modes and can itself be undone.
-6. Adjust the text scale, export CSS/JSON, and reimport the JSON. Exports contain the active mode; export the other mode separately.
+6. Adjust the text scale, export CSS/JSON, and reimport the JSON. CSS/JSON exports contain the active mode; **Download both modes** combines your independent light and dark CSS into one file.
 7. Try the sample product: **Create a space** focuses the project-name field, and submitting displays your text inside the card. This small preview state is session-only.
 
 Themes save locally as one validated, versioned workspace containing both modes. Corrupt storage falls back to Orchard with a warning; blocked storage leaves editing and export available. Multiple tabs use last-write-wins local saving, with no live synchronization.
@@ -95,7 +95,7 @@ The exported variables are tokens, not a complete component stylesheet. [The com
 | `npm run test:e2e`  | Chromium journeys, import races and actual screenshots |
 | `npm run format`    | Format source, tests and docs with pinned Prettier     |
 
-Install matching Chromium once using `npx playwright install chromium`. Vite uses a relative asset base so the build supports GitHub repository subpaths. The eventual verified demo URL will be added by the publishing workflow.
+Install matching Chromium once using `npx playwright install chromium`. Vite uses a relative asset base so the build supports GitHub repository subpaths. The live demo above uses the same repository-subpath build.
 
 ## Boundaries and engineering notes
 

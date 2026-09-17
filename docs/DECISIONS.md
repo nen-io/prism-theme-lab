@@ -71,3 +71,13 @@
 **Consequences.** The UI remains usable and old results cannot overwrite newer intent. This cancels commit authority, not the underlying read. The 32 KiB bound controls residual work. Browser race tests deliberately delay the read, then select a newer preset or type an uncommitted color/name draft.
 
 **Revisit.** If very large files or workers are added, combine the same authority check with actual abort/worker termination and explicit progress reporting.
+
+## ADR 007 — Actionable contrast with shared-token previews
+
+**Context.** Ratios identified failures but only the button label offered a direct repair. Users had to scroll back and map token names to fields themselves.
+
+**Decision.** Every measured pair links to its foreground editor. Failing pairs may suggest black/white, chosen by the largest weakest ratio across all measured uses of the same token. The UI states shared effects and projected ratios before applying. If both candidates fail a shared pair, explain the limit and keep manual editing available. One reducer action applies the token; normal undo and import fencing remain intact.
+
+**Tradeoff.** This is a tiny, inspectable two-candidate helper, not a palette optimization algorithm. It can decline when another intermediate color would pass. Warnings and raw-ratio checks prevent a rounded display or a single improved pair from being mistaken for a complete repair. [W3C contrast guidance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), reviewed 17 September 2026, remains the basis of the existing math.
+
+**Export refinement.** Both-mode export composes two existing validated CSS outputs rather than introducing a new schema. This keeps strict selector/token validation in one place, avoids coupling light and dark palettes and requires no import migration.

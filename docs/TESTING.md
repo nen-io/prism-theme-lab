@@ -6,8 +6,8 @@ Executed locally on 17 September 2026 with Node 24.19.0, npm 11.17.0 and exact d
 
 | Check                     | Result                                                                                                                                                                                                                                          |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run check`           | Strict TypeScript checking, 11 Vitest tests and production Vite build passed                                                                                                                                                                    |
-| `npm run test:e2e`        | 9 Chromium journeys passed                                                                                                                                                                                                                      |
+| `npm run check`           | Strict TypeScript checking, 12 Vitest tests and production Vite build passed                                                                                                                                                                    |
+| `npm run test:e2e`        | 12 Chromium journeys passed                                                                                                                                                                                                                     |
 | Responsive checks         | No horizontal page overflow at 320px or 720px with root text size doubled; keyboard mode switching, focusable/scrollable CSS export preview and reduced-motion media exercised                                                                  |
 | Screenshot review         | Actual populated desktop 1440px and mobile 390px captures generated and visually inspected                                                                                                                                                      |
 | Independent parent review | Found shell text contrast/size and same-value reset-draft issues; both corrected with styling and a dedicated browser regression; follow-up axe found no contrast issues, and its scrollable-code focus finding was fixed and regression-tested |
@@ -53,7 +53,7 @@ The browser storage tests inject malformed data or a throwing localStorage gette
 - `docs/screenshots/desktop.png`: 1440px viewport, default Orchard light palette, working preview and all four pair assessments.
 - `docs/screenshots/mobile.png`: 390px viewport, same populated application, full page.
 
-The sixth Playwright test captures these from a running app. They are documentation images, not a pixel-diff baseline. Screenshots were regenerated after raising supporting type to at least 11px in the studio and correcting secondary-text colors. The editor itself uses fixed colors while the inspected preview still follows user tokens.
+The screenshot Playwright journey captures these from a running app. They are documentation images, not a pixel-diff baseline. Screenshots were regenerated after raising supporting type to at least 11px in the studio and correcting secondary-text colors. The editor itself uses fixed colors while the inspected preview still follows user tokens.
 
 ## Evidence limits
 
@@ -61,4 +61,8 @@ Chromium is covered. Safari/Firefox, native mobile pickers on physical devices a
 
 ## Independent release review
 
-The studio shell passed the follow-up axe WCAG 2/2.1 AA scan with zero reported violations. Supporting typography was increased, and the CSS export region now accepts keyboard focus for horizontal scrolling. A production meta CSP was added and is checked separately from development. Two added browser regressions prove that a pending file read cannot discard a newer uncommitted color or theme-name draft. The full check and all nine Chromium journeys passed after these changes.
+The studio shell passed the follow-up axe WCAG 2/2.1 AA scan with zero reported violations. Supporting typography was increased, and the CSS export region now accepts keyboard focus for horizontal scrolling. A production meta CSP was added and is checked separately from development. Two added browser regressions prove that a pending file read cannot discard a newer uncommitted color or theme-name draft. The full check and all twelve Chromium journeys passed after these changes.
+
+## Refinement verification
+
+Twelve domain tests and twelve Chromium journeys pass after refinement. Added coverage checks shared foreground repair across page/card surfaces, exact field focus/navigation, undo, the explanatory state when black/white cannot pass both surfaces, mobile no-overflow/focus, and downloaded CSS containing both independently edited palettes. The domain regression proves the helper preserves the input, uses every shared pair and does not promise an impossible black/white repair. Existing malformed import, pending draft authority, persistence, contrast threshold and security journeys remain green. Both-mode CSS uses the same validated export implementation as the original single-mode output.

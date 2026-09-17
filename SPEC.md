@@ -28,3 +28,11 @@ WCAG formula/source, assessed pairs, normal/large-text distinction, limits of co
 
 ## Completion gate
 Implement the behavior and acceptance tests above; document any deliberate limitation. `npm run check` and `npm run test:e2e` must pass. Independently review the code and exercise the production build before release. Verify the public demo at its GitHub repository subpath.
+
+## Refinement behavior: act on contrast and export a pair
+
+Each contrast assessment offers an Edit color action that focuses and scrolls to the exact foreground field. A failing pair previews black/white suggestions against every measured background sharing its foreground. Choose the candidate maximizing the minimum raw ratio, with black as the deterministic tie-break. Offer Use only when all affected measured pairs meet normal AA using unrounded ratios. Explain when neither candidate can satisfy all pairs; do not claim no other color could work. Applying a suggestion is one ordinary token edit with undo, persistence and async-import fencing. Other modes remain independent.
+
+Download both modes produces a CSS file containing the validated light selector followed by the validated dark selector, using committed state in each mode. Existing single-mode CSS/JSON formats and import schema do not change.
+
+Acceptance: repair a white-on-white shared text token, verify both measured surfaces and undo; opposite black/white surfaces must show an explanation without a misleading repair; mobile Edit color reaches/focuses the field; a downloaded pair contains both independently edited colors and exactly two fixed selectors.

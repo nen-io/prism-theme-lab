@@ -71,3 +71,22 @@ export function assess(theme: Theme) {
     };
   });
 }
+
+/** Maximize the weakest measured pair sharing this foreground token.
+ * Only black and white are considered; this is not an automatic palette solver.
+ */
+export function foregroundSuggestion(theme: Theme, token: TokenKey) {
+  const related = PAIRS.filter((pair) => pair.foreground === token);
+  if (!related.length) throw new Error('No measured text pair uses this token.');
+  const score = (color: string) =>
+    Math.min(...related.map((pair) => contrast(color, theme.tokens[pair.background])));
+  const color = score('#000000') >= score('#FFFFFF') ? '#000000' : '#FFFFFF';
+  return {
+    color,
+    pairs: related.map((pair) => ({
+      ...pair,
+      ratio: contrast(color, theme.tokens[pair.background]),
+    })),
+    allPass: score(color) >= 4.5,
+  };
+}

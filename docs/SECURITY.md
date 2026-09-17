@@ -39,3 +39,7 @@ The production build injects a meta Content Security Policy: scripts and assets 
 ## Reporting
 
 Once published, use repository issues for non-sensitive problems. For a sensitive vulnerability, use GitHub private vulnerability reporting if enabled; otherwise request a private channel from the maintainer without posting secrets or exploit details. No unverified contact address is invented.
+
+## Refinement boundaries
+
+Contrast suggestions are derived from validated tokens and return only hardcoded black/white values; no supplied string becomes markup, a selector or an executable style rule. Both-mode export independently validates both themes through the existing export boundary before creating a download. The new field-navigation action uses only the fixed token-key set. No clipboard, network access or new dependency is introduced.
