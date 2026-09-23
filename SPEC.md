@@ -42,3 +42,10 @@ Acceptance: repair a white-on-white shared text token, verify both measured surf
 Back up workspace exports a strictly validated version-1 Workspace JSON containing both mode themes, active mode and preset identity. The existing Import JSON input accepts a Theme or a complete Workspace, chosen by exact top-level schema; unknown, hybrid, wrong-version or mismatched-mode objects fail without partial changes. The same 32 KiB byte limit applies before file reading and after text decoding. A workspace import is one undoable replacement, resets visible drafts and retains the existing async generation fence. Single-theme JSON imports remain backward compatible and preserve the other mode. Backup includes committed values only, excludes undo history/drafts, and never uploads data.
 
 Acceptance: download actual JSON, change both modes, import/undo/redo/reload exact roundtrip; malformed workspace and delayed import cannot overwrite newer intent; schema, byte bounds and identity validation have domain tests. Source and Engineering walkthrough links are visible in the footer.
+
+
+## Accessibility and human usability — 23 September 2026
+
+The supported keyboard paths, error recovery, readable controls and layout states are specified in [ACCESSIBILITY.md](docs/ACCESSIBILITY.md). New browser regressions exercise these outcomes alongside existing domain and security boundaries. No remote service, data format or resource limit changes are introduced.
+
+At 320px, doubling the computed size of headings, labels, control text and supporting copy must preserve page reflow even while a theme-name error is visible. The user must still restore the name with Escape and edit a hex value by keyboard. The unfocused skip link must stay visually clipped regardless of scroll position or text size, and become fully visible when focused.

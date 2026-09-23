@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { validateName } from '../domain/theme';
 export function ThemeName({
   value,
   mode,
@@ -13,30 +14,57 @@ export function ThemeName({
   onCommit: (value: string) => void;
 }) {
   const [draft, setDraft] = useState(value);
-  useEffect(() => setDraft(value), [value, mode, draftRevision]);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    setDraft(value);
+    setError('');
+  }, [value, mode, draftRevision]);
+  function commit() {
+    try {
+      const name = validateName(draft);
+      setError('');
+      onCommit(name);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'Check the theme name.');
+    }
+  }
   return (
-    <label className="theme-name-label">
-      <span>THEME NAME</span>
+    <div className="theme-name-label">
+      <label htmlFor="theme-name">THEME NAME</label>
       <input
+        id="theme-name"
         aria-label="Theme name"
+        aria-invalid={!!error}
+        aria-describedby={error ? 'theme-name-error' : 'theme-name-help'}
         value={draft}
         maxLength={64}
         onChange={(event) => {
           onDraftChange();
           setDraft(event.target.value);
+          setError('');
         }}
-        onBlur={() => onCommit(draft)}
+        onBlur={commit}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
-            onCommit(draft);
+            commit();
           }
           if (event.key === 'Escape') {
             onDraftChange();
             setDraft(value);
+            setError('');
           }
         }}
       />
-    </label>
+      <span id="theme-name-help" className="sr-only">
+        Use 1–48 letters, numbers, spaces or simple punctuation. Enter or leave the field to save.
+        Escape restores the saved name.
+      </span>
+      {error && (
+        <p id="theme-name-error" className="field-error" role="alert">
+          {error}
+        </p>
+      )}
+    </div>
   );
 }

@@ -220,9 +220,9 @@ test('token pairs match actual styles; desktop/mobile screenshots and narrow key
   await page.keyboard.press('End');
   await expect.poll(() => codeRegion.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
   await codeRegion.evaluate((element) => {
-    (element as HTMLElement).blur();
     element.scrollTop = 0;
   });
+  await page.locator('#workbench').focus();
   await page.screenshot({ path: 'docs/screenshots/desktop.png', fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: 'docs/screenshots/mobile.png', fullPage: true });

@@ -4,12 +4,17 @@ export function Preview({ theme }: { theme: Theme }) {
   const [tab, setTab] = useState<'overview' | 'projects'>('overview');
   const [project, setProject] = useState('');
   const [created, setCreated] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState('');
   const input = useRef<HTMLInputElement>(null);
   function create() {
     if (project.trim()) {
       setCreated(project.trim());
+      setFeedback(`${project.trim()} created in this preview only.`);
       setProject('');
-    } else input.current?.focus();
+    } else {
+      setFeedback('Enter a name for your sample project.');
+      input.current?.focus();
+    }
   }
   return (
     <section className="preview-frame" aria-labelledby="preview-heading">
@@ -114,12 +119,15 @@ export function Preview({ theme }: { theme: Theme }) {
           >
             <div>
               <label htmlFor="sample-project">Name your next project</label>
-              <p className="product-helper">Just a little spark to get started.</p>
+              <p id="sample-project-help" className="product-helper">
+                Just a little spark to get started.
+              </p>
             </div>
             <div className="product-input-group">
               <input
                 ref={input}
                 id="sample-project"
+                aria-describedby="sample-project-help"
                 value={project}
                 onChange={(event) => setProject(event.target.value)}
                 maxLength={80}
@@ -130,6 +138,9 @@ export function Preview({ theme }: { theme: Theme }) {
               </button>
             </div>
           </form>
+          <p role="status" aria-label="Preview feedback" className="product-helper">
+            {feedback}
+          </p>
           <div className="product-bottom">
             <span>GOOD THINGS TAKE A LITTLE SPACE.</span>
             <span>Made for the way you think.</span>

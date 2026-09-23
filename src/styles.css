@@ -181,6 +181,7 @@ input {
   letter-spacing: -2.4px;
   line-height: 1.13;
   margin-top: 18px;
+  overflow-wrap: anywhere;
 }
 .hero h1 > span {
   color: #49633f;
@@ -1194,7 +1195,7 @@ input {
 }
 .skip-link {
   position: fixed;
-  top: -80px;
+  top: 15px;
   left: 18px;
   z-index: 10;
   padding: 12px 16px;
@@ -1202,8 +1203,13 @@ input {
   color: #fff;
   border-radius: 6px;
 }
-.skip-link:focus {
-  top: 15px;
+.skip-link:not(:focus) {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 @media (min-width: 1600px) {
   .hero {
@@ -2065,6 +2071,8 @@ input {
 }
 .token-key {
   margin-left: 0;
+  flex-shrink: 0;
+  max-width: 100%;
 }
 .product-card-copy {
   max-width: 100%;
@@ -2125,7 +2133,7 @@ input {
     margin-left: auto;
   }
   .hex-wrap {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
   .hex-wrap input {
     width: 6.5em;
@@ -2168,16 +2176,119 @@ input {
   color: #263e2d;
 }
 
-.review-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; }
-.review-links a { color: #305c45; text-underline-offset: 4px; }
-.review-links a:focus-visible { outline: 2px solid #305c45; outline-offset: 4px; }
+.review-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+}
+.review-links a {
+  color: #305c45;
+  text-underline-offset: 4px;
+}
+.review-links a:focus-visible {
+  outline: 2px solid #305c45;
+  outline-offset: 4px;
+}
 
 /* Keep explanations from becoming an intrinsic-width third column. */
-.export-section { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-.export-section > * { min-width: 0; }
-.export-actions { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; }
-.export-actions small { grid-column: 1 / -1; text-align: left; }
+.export-section {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.export-section > * {
+  min-width: 0;
+}
+.export-actions {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+}
+.export-actions small {
+  grid-column: 1 / -1;
+  text-align: left;
+}
 @media (max-width: 620px) {
-  .export-section { grid-template-columns: minmax(0, 1fr); }
-  .export-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .export-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .export-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Reading and keyboard targets belong to the editor shell, independently of theme tokens. */
+.theme-name-label > label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+.theme-name-label {
+  min-width: 0;
+}
+.theme-name-label .field-error {
+  max-width: 32ch;
+}
+.workspace:focus {
+  outline: 2px solid #305c45;
+  outline-offset: 5px;
+}
+.header-right button,
+.mode-toggle button,
+.reset-button,
+.export-actions button,
+.contrast-panel button,
+.contrast-card button,
+.suggestion button {
+  font-size: 0.8125rem;
+  min-height: 36px;
+}
+.token-content label,
+.token-content input,
+.rail-note p,
+.contrast-card p,
+.contrast-footnote,
+.export-section p,
+.export-actions small,
+.editor-notice {
+  font-size: 0.8125rem;
+}
+.token-content input {
+  min-height: 32px;
+}
+.token-key {
+  font-size: 0.75rem;
+}
+.history-buttons button {
+  min-width: 36px;
+  min-height: 36px;
+}
+.scale-control input {
+  min-height: 28px;
+}
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+}
+@media (pointer: coarse) {
+  button,
+  .token-content input,
+  .history-buttons button {
+    min-height: 44px;
+  }
+}
+@media (forced-colors: active) {
+  :focus-visible,
+  .workspace:focus {
+    outline: 3px solid Highlight;
+  }
+  .preset-card.active,
+  button[aria-pressed='true'] {
+    border: 2px solid Highlight;
+  }
+  .color-control {
+    outline: 1px solid CanvasText;
+  }
 }

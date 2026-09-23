@@ -12,6 +12,8 @@
 
 This is a new AI-assisted portfolio demonstration with executable verification, original examples, and explicit operating limits.
 
+**[Accessibility and keyboard guide](docs/ACCESSIBILITY.md)** — navigation, error recovery, layout support and tested limits.
+
 ## Start the studio
 
 Requires Node 24.19+ and npm.

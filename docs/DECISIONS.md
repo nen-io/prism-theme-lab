@@ -86,3 +86,10 @@
 ## Complete workspace backup — September 2026
 
 Expose a complete backup as a distinct action while preserving single-theme JSON interoperability. Reusing the existing validated Workspace shape avoids a second serialization model. Strict top-level keys make hybrid or future-version files fail visibly instead of partially importing. A backup restores active mode and preset because they explain reset behavior, but excludes session-only drafts/history. Mode imports remain single-mode replacements. Revisit explicit migrations when the workspace schema evolves. References: [React state ownership](https://react.dev/learn/managing-state), [Blob URL lifecycle](https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL_static).
+
+
+## Accessibility refinement — 23 September 2026
+
+Use native controls, explicit editor entry points and associated field errors. Focus moves at intentional navigation and recovery boundaries, not every state update. The [accessibility guide](ACCESSIBILITY.md) explains the interaction model, alternatives and evidence limits. These changes leave domain validation, bounded state and local-only processing intact; they introduce no new dependencies.
+
+A broader text-size test found a long hero word widening a 320px page to 349px. Let that heading wrap and let token keys move below hex values instead of hiding overflow or shrinking the user's text. Clip the unfocused skip link rather than guessing a negative offset that can become visible while scrolling or enlarging text. These are constant-cost CSS layout changes; export validation, storage and resource limits remain unchanged. The [WAI reflow guidance](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html) distinguishes readable content from legitimate separately scrollable regions.

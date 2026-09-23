@@ -52,12 +52,13 @@ The browser storage tests inject malformed data or a throwing localStorage gette
 
 - `docs/screenshots/desktop.png`: 1440px viewport, default Orchard light palette, working preview and all four pair assessments.
 - `docs/screenshots/mobile.png`: 390px viewport, same populated application, full page.
+- `docs/screenshots/accessibility-forced-colors.png`: 320px viewport with doubled computed text sizes, forced colors and the focused hex editor after keyboard error recovery.
 
 The screenshot Playwright journey captures these from a running app. They are documentation images, not a pixel-diff baseline. Screenshots were regenerated after raising supporting type to at least 11px in the studio and correcting secondary-text colors. The editor itself uses fixed colors while the inspected preview still follows user tokens.
 
 ## Evidence limits
 
-Chromium is covered. Safari/Firefox, native mobile pickers on physical devices and assistive-technology interaction were not tested. The 200% check changes the root font size to 32px; it is a layout stress check, not a claim of testing every browser zoom behavior. Keyboard smoke does not establish a complete screen-reader audit. Default preview colors pass measured text pairs, but users may deliberately create contrast failures. No penetration test, performance benchmark, long-duration storage test, cloud collaboration or multi-tab conflict-resolution test was performed. No network upload exists to validate. Deployment and final independent review are separate gates owned by the publishing workflow.
+Chromium is covered. Safari/Firefox, native mobile pickers on physical devices and assistive-technology interaction were not tested. Text-size checks change the root font size to 32px or double pre-captured computed sizes of headings, controls and supporting text at 320px. These are layout stress checks, not claims of testing every browser zoom behavior. Keyboard smoke does not establish a complete screen-reader audit. Default preview colors pass measured text pairs, but users may deliberately create contrast failures. No penetration test, performance benchmark, long-duration storage test, cloud collaboration or multi-tab conflict-resolution test was performed. No network upload exists to validate. Deployment and final independent review are separate gates owned by the publishing workflow.
 
 ## Independent release review
 
@@ -73,3 +74,8 @@ Twelve domain tests and twelve Chromium journeys pass after refinement. Added co
 September 23 iteration adds actual downloaded Workspace roundtrip, both-mode history/reload, malformed mode identity and delayed-read versus newer-draft cases. Domain checks cover legacy single themes, unknown schemas/presets/prototype keys, UTF-8 byte limits and atomic rejection. Initial browser acceptance failed at the absent backup control; the same journey passes after implementation. `npm run check` passes 14 domain cases; the full Chromium suite passes 15 journeys.
 
 A visual check exposed intrinsic-width help text crushing the desktop export columns without overflowing the page. The responsive grid now gives explanation and CSS equal bounded columns, with actions below. A geometry regression checks 1440/900/720/390/320px.
+
+
+## Accessibility and task usability — 23 September 2026
+
+`npm run check` passes strict types, 14 domain tests and production build. The full Chromium suite passes 19 journeys, including new field/error associations, keyboard entry and recovery, 320px enlarged-text/forced-colors checks and refreshed actual screenshots. See [ACCESSIBILITY.md](ACCESSIBILITY.md) for the supported interactions and limits. These are DOM/browser checks, not VoiceOver/NVDA, physical-device or formal conformance evidence.

@@ -126,7 +126,7 @@ export default function App() {
             Export CSS <span aria-hidden="true">↗</span>
           </button>
           <input
-            className="sr-only"
+            hidden
             ref={fileInput}
             type="file"
             accept=".json,application/json"
@@ -139,7 +139,7 @@ export default function App() {
           />
         </div>
       </header>
-      <main id="workbench">
+      <main>
         <section className="hero">
           <div>
             <span className="eyebrow">MAKE SOMETHING FEEL LIKE YOU</span>
@@ -170,12 +170,19 @@ export default function App() {
             <button
               onClick={() => {
                 setStorageWarning('');
+                document.getElementById('theme-name')?.focus();
                 apply({ type: 'reset' });
               }}
             >
               Reset to preset
             </button>
-            <button aria-label="Dismiss storage warning" onClick={() => setStorageWarning('')}>
+            <button
+              aria-label="Dismiss storage warning"
+              onClick={() => {
+                setStorageWarning('');
+                document.getElementById('theme-name')?.focus();
+              }}
+            >
               ×
             </button>
           </div>
@@ -215,7 +222,7 @@ export default function App() {
             </button>
           ))}
         </section>
-        <section className="workspace">
+        <section className="workspace" id="workbench" tabIndex={-1} aria-label="Theme workbench">
           <div className="workspace-toolbar">
             <ThemeName
               onDraftChange={invalidateImport}
@@ -288,6 +295,7 @@ export default function App() {
                     min="0.85"
                     max="1.4"
                     step="0.01"
+                    aria-valuetext={`${Math.round(theme.fontScale * 100)} percent preview text size`}
                     value={theme.fontScale}
                     onChange={(event) =>
                       apply({ type: 'scale', value: Number(event.target.value) })

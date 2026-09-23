@@ -47,14 +47,15 @@ export function validateHex(value: unknown): string {
     throw new ThemeError('Use six hex digits, for example #305C45.');
   return value.toUpperCase();
 }
+export function validateName(value: unknown): string {
+  if (typeof value !== 'string' || !/^[\p{L}\p{N}][\p{L}\p{M}\p{N} _.'()-]{0,47}$/u.test(value))
+    throw new ThemeError('Use a name of 1–48 letters, numbers, spaces or simple punctuation.');
+  return value;
+}
 export function validateTheme(value: unknown): Theme {
   object(value, ['version', 'name', 'mode', 'tokens', 'fontScale'], 'Theme');
   if (value.version !== 1) throw new ThemeError('Only theme version 1 is supported.');
-  if (
-    typeof value.name !== 'string' ||
-    !/^[\p{L}\p{N}][\p{L}\p{M}\p{N} _.'()-]{0,47}$/u.test(value.name)
-  )
-    throw new ThemeError('Use a name of 1–48 letters, numbers, spaces or simple punctuation.');
+  const name = validateName(value.name);
   if (value.mode !== 'light' && value.mode !== 'dark')
     throw new ThemeError('Mode must be light or dark.');
   if (
@@ -69,7 +70,7 @@ export function validateTheme(value: unknown): Theme {
   const tokens = Object.fromEntries(
     TOKEN_KEYS.map((key) => [key, validateHex(rawTokens[key])]),
   ) as Tokens;
-  return { version: 1, name: value.name, mode: value.mode, tokens, fontScale: value.fontScale };
+  return { version: 1, name, mode: value.mode, tokens, fontScale: value.fontScale };
 }
 export function parseTheme(text: string): Theme {
   if (new TextEncoder().encode(text).length > MAX_IMPORT_BYTES)
