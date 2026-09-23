@@ -66,3 +66,10 @@ The studio shell passed the follow-up axe WCAG 2/2.1 AA scan with zero reported 
 ## Refinement verification
 
 Twelve domain tests and twelve Chromium journeys pass after refinement. Added coverage checks shared foreground repair across page/card surfaces, exact field focus/navigation, undo, the explanatory state when black/white cannot pass both surfaces, mobile no-overflow/focus, and downloaded CSS containing both independently edited palettes. The domain regression proves the helper preserves the input, uses every shared pair and does not promise an impossible black/white repair. Existing malformed import, pending draft authority, persistence, contrast threshold and security journeys remain green. Both-mode CSS uses the same validated export implementation as the original single-mode output.
+
+
+## Complete workspace backup — September 2026
+
+September 23 iteration adds actual downloaded Workspace roundtrip, both-mode history/reload, malformed mode identity and delayed-read versus newer-draft cases. Domain checks cover legacy single themes, unknown schemas/presets/prototype keys, UTF-8 byte limits and atomic rejection. Initial browser acceptance failed at the absent backup control; the same journey passes after implementation. `npm run check` passes 14 domain cases; the full Chromium suite passes 15 journeys.
+
+A visual check exposed intrinsic-width help text crushing the desktop export columns without overflowing the page. The responsive grid now gives explanation and CSS equal bounded columns, with actions below. A geometry regression checks 1440/900/720/390/320px.

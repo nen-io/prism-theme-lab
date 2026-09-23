@@ -38,3 +38,8 @@ A useful future benchmark would record browser/version, CPU/device, token/pair/h
 ## Refinement resource cost
 
 The suggestion helper evaluates two candidates across the existing four measured pairs. Related-pair scanning remains a fixed small bound; it introduces no palette search or background work. Exporting both modes creates at most two fixed-size token blocks in one Blob, with the existing URL revocation lifecycle. Theme/history/import limits are unchanged.
+
+
+## Complete workspace backup — September 2026
+
+Complete backups add only two bounded Theme objects and three small workspace metadata values. The existing 32 KiB import and 50-entry history limits remain unchanged. One restore adds one history entry; export does not copy history or drafts. This is a local two-mode workbench, not multi-user token distribution or conflict resolution.

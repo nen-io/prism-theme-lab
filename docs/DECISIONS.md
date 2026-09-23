@@ -81,3 +81,8 @@
 **Tradeoff.** This is a tiny, inspectable two-candidate helper, not a palette optimization algorithm. It can decline when another intermediate color would pass. Warnings and raw-ratio checks prevent a rounded display or a single improved pair from being mistaken for a complete repair. [W3C contrast guidance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), reviewed 17 September 2026, remains the basis of the existing math.
 
 **Export refinement.** Both-mode export composes two existing validated CSS outputs rather than introducing a new schema. This keeps strict selector/token validation in one place, avoids coupling light and dark palettes and requires no import migration.
+
+
+## Complete workspace backup — September 2026
+
+Expose a complete backup as a distinct action while preserving single-theme JSON interoperability. Reusing the existing validated Workspace shape avoids a second serialization model. Strict top-level keys make hybrid or future-version files fail visibly instead of partially importing. A backup restores active mode and preset because they explain reset behavior, but excludes session-only drafts/history. Mode imports remain single-mode replacements. Revisit explicit migrations when the workspace schema evolves. References: [React state ownership](https://react.dev/learn/managing-state), [Blob URL lifecycle](https://developer.mozilla.org/en-US/docs/Web/API/URL/revokeObjectURL_static).

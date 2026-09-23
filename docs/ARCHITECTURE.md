@@ -76,3 +76,8 @@ Exact package versions and resolved dependencies are recorded in package.json an
 ## Contrast-to-edit and paired export
 
 `foregroundSuggestion` derives the related measured pairs from the existing PAIRS table and evaluates only two fixed candidates. `ContrastPanel` renders projected effects; App routes explicit selection through the existing editor reducer. Edit-color actions target known token input IDs, focus first and scroll with reduced-motion handling. No theme mutation occurs on navigation. Both-mode CSS export calls `exportCss` separately for each committed mode and joins the outputs; single-mode JSON import/export remains unchanged.
+
+
+## Complete workspace backup — September 2026
+
+The transfer boundary accepts either the exact Theme schema or the exact version-1 Workspace schema. The presence of `modes` selects workspace validation; it never causes a permissive merge. Validated workspace actions commit both modes atomically through the existing reducer, storage effect and bounded undo history. The app reuses the same file-read generation fence for both formats.

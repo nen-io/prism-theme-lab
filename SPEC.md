@@ -36,3 +36,9 @@ Each contrast assessment offers an Edit color action that focuses and scrolls to
 Download both modes produces a CSS file containing the validated light selector followed by the validated dark selector, using committed state in each mode. Existing single-mode CSS/JSON formats and import schema do not change.
 
 Acceptance: repair a white-on-white shared text token, verify both measured surfaces and undo; opposite black/white surfaces must show an explanation without a misleading repair; mobile Edit color reaches/focuses the field; a downloaded pair contains both independently edited colors and exactly two fixed selectors.
+
+## September iteration: portable workspace backup
+
+Back up workspace exports a strictly validated version-1 Workspace JSON containing both mode themes, active mode and preset identity. The existing Import JSON input accepts a Theme or a complete Workspace, chosen by exact top-level schema; unknown, hybrid, wrong-version or mismatched-mode objects fail without partial changes. The same 32 KiB byte limit applies before file reading and after text decoding. A workspace import is one undoable replacement, resets visible drafts and retains the existing async generation fence. Single-theme JSON imports remain backward compatible and preserve the other mode. Backup includes committed values only, excludes undo history/drafts, and never uploads data.
+
+Acceptance: download actual JSON, change both modes, import/undo/redo/reload exact roundtrip; malformed workspace and delayed import cannot overwrite newer intent; schema, byte bounds and identity validation have domain tests. Source and Engineering walkthrough links are visible in the footer.

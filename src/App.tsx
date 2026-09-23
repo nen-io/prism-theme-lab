@@ -2,7 +2,8 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import { editorReducer, initialEditor, type Action } from './domain/editor';
 import { PRESETS } from './domain/presets';
 import { browserStorage, loadWorkspace, saveWorkspace } from './domain/storage';
-import { exportCss, exportJson, MAX_IMPORT_BYTES, parseTheme } from './domain/theme';
+import { exportCss, exportJson, MAX_IMPORT_BYTES } from './domain/theme';
+import { parseImport, exportWorkspace } from './domain/transfer';
 import { TokenEditor } from './components/TokenEditor';
 import { Preview } from './components/Preview';
 import { ContrastPanel } from './components/ContrastPanel';
@@ -50,7 +51,7 @@ export default function App() {
       if (file.size > MAX_IMPORT_BYTES) throw new Error('Theme file exceeds 32 KiB.');
       const text = await file.text();
       if (generation !== importGeneration.current) return;
-      dispatch({ type: 'import', theme: parseTheme(text) });
+      dispatch(parseImport(text));
     } catch (error) {
       if (generation === importGeneration.current)
         dispatch({
@@ -61,25 +62,36 @@ export default function App() {
       if (generation === importGeneration.current) setImporting(false);
     }
   }
-  function download(kind: 'css' | 'json' | 'both') {
+  function download(kind: 'css' | 'json' | 'both' | 'workspace') {
     try {
       const data =
-        kind === 'both'
-          ? exportCss(editor.current.modes.light) + '\n' + exportCss(editor.current.modes.dark)
-          : kind === 'css'
-            ? exportCss(theme)
-            : exportJson(theme);
-      const blob = new Blob([data], { type: kind === 'json' ? 'application/json' : 'text/css' });
+        kind === 'workspace'
+          ? exportWorkspace(editor.current)
+          : kind === 'both'
+            ? exportCss(editor.current.modes.light) + '\n' + exportCss(editor.current.modes.dark)
+            : kind === 'css'
+              ? exportCss(theme)
+              : exportJson(theme);
+      const blob = new Blob([data], {
+        type: kind === 'json' || kind === 'workspace' ? 'application/json' : 'text/css',
+      });
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = kind === 'both' ? 'prism-both.css' : `prism-${theme.mode}.${kind}`;
+      anchor.download =
+        kind === 'workspace'
+          ? 'prism-workspace.json'
+          : kind === 'both'
+            ? 'prism-both.css'
+            : `prism-${theme.mode}.${kind}`;
       anchor.click();
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
       setExportNotice(
-        kind === 'both'
-          ? 'CSS exported for both committed modes.'
-          : `${kind.toUpperCase()} exported for the committed ${theme.mode} theme.`,
+        kind === 'workspace'
+          ? 'Workspace backup exported. Both committed modes are included; drafts and undo history are not.'
+          : kind === 'both'
+            ? 'CSS exported for both committed modes.'
+            : `${kind.toUpperCase()} exported for the committed ${theme.mode} theme.`,
       );
     } catch (error) {
       dispatch({ type: 'error', text: (error as Error).message });
@@ -312,7 +324,7 @@ export default function App() {
             <span className="eyebrow">FROM PLAYGROUND TO PRODUCT</span>
             <h2>Take your good work with you.</h2>
             <p>
-              Validated CSS variables and a portable JSON theme.
+              Validated CSS, a single theme, or a complete workspace backup.
               <br />
               No account. No uploads. Just your colors.
             </p>
@@ -328,15 +340,29 @@ export default function App() {
               Export JSON <span aria-hidden="true">↗</span>
             </button>
             <button onClick={() => download('both')}>Download both modes</button>
+            <button onClick={() => download('workspace')}>Back up workspace</button>
             <small>
               CSS and JSON export the active mode. Both modes combines your light and dark CSS in
-              one file.
+              one file. Workspace backup saves both committed modes and your selected preset.
+              Restore either JSON format with Import JSON. Unsaved drafts and undo history are
+              excluded.
             </small>
           </div>
         </section>
         <footer className="site-footer">
           <span>PRISM · AN INDEPENDENT DESIGN EXPERIMENT</span>
-          <span>Solid sRGB colors. Transparent decisions.</span>
+          <nav className="review-links" aria-label="Project resources">
+            <a href="https://github.com/nen-io/prism-theme-lab" target="_blank" rel="noreferrer">
+              Source
+            </a>
+            <a
+              href="https://github.com/nen-io/prism-theme-lab/blob/main/docs/REVIEWER_GUIDE.md"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Engineering walkthrough
+            </a>
+          </nav>
         </footer>
       </main>
     </div>

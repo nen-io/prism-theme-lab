@@ -43,3 +43,8 @@ Once published, use repository issues for non-sensitive problems. For a sensitiv
 ## Refinement boundaries
 
 Contrast suggestions are derived from validated tokens and return only hardcoded black/white values; no supplied string becomes markup, a selector or an executable style rule. Both-mode export independently validates both themes through the existing export boundary before creating a download. The new field-navigation action uses only the fixed token-key set. No clipboard, network access or new dependency is introduced.
+
+
+## Complete workspace backup — September 2026
+
+Workspace import checks the 32 KiB File size before reading and UTF-8 byte count before parsing. Complete allowlists, fixed enum modes, known preset IDs and validated themes reject unknown/prototype keys and mismatched nested modes. Only reconstructed validated objects enter the reducer; invalid files preserve both existing modes. Draft intent invalidates pending imports. Backups are local JSON downloads with no network request; names never enter CSS selectors or executable markup.

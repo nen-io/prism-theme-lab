@@ -25,3 +25,8 @@ At narrow widths the preset row becomes a vertical list, toolbar wraps, and the 
 ## Contrast refinement
 
 Each assessment now ends with an Edit color action, keeping the measured failure connected to its control. Failing cards show a warm inset explanation of the candidate and shared token effects; the main palette stays fixed-color and legible. The mobile jump focuses the exact field and brings it into view, with reduced-motion support. A third export control packages both modes without disrupting the existing active-mode controls. `screenshots/contrast-repair.png` shows a deliberately failing shared text token before the explicit correction.
+
+
+## Complete workspace backup — September 2026
+
+The export panel now distinguishes active-mode CSS/JSON, combined CSS, and complete workspace backup in visible copy. The existing Import JSON control restores either supported format. Source and Engineering walkthrough links sit in the footer with visible keyboard focus and wrapping text.

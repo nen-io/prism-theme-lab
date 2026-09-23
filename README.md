@@ -8,6 +8,10 @@
 
 **[Open the live demo](https://nen-io.github.io/prism-theme-lab/)** · [CI checks](https://github.com/nen-io/prism-theme-lab/actions)
 
+**[Three-minute engineering review](docs/REVIEWER_GUIDE.md)** — try a complete workspace roundtrip and inspect its guarantees.
+
+This is a new AI-assisted portfolio demonstration with executable verification, original examples, and explicit operating limits.
+
 ## Start the studio
 
 Requires Node 24.19+ and npm.

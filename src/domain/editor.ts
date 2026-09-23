@@ -1,12 +1,13 @@
 import {
   MAX_HISTORY,
   validateTheme,
+  validateWorkspace,
   type Mode,
   type Theme,
   type TokenKey,
   type Workspace,
 } from './theme';
-import { presetWorkspace } from './presets';
+import { PRESETS, presetWorkspace } from './presets';
 export interface Editor {
   current: Workspace;
   past: Workspace[];
@@ -24,6 +25,7 @@ export type Action =
   | { type: 'preset'; id: string }
   | { type: 'reset' }
   | { type: 'import'; theme: Theme }
+  | { type: 'workspace'; workspace: Workspace }
   | { type: 'undo' }
   | { type: 'redo' }
   | { type: 'error'; text: string };
@@ -111,6 +113,16 @@ export function editorReducer(state: Editor, action: Action): Editor {
           error: '',
         };
       }
+      case 'workspace':
+        return commit(
+          state,
+          validateWorkspace(
+            action.workspace,
+            PRESETS.map((p) => p.id),
+          ),
+          'Workspace imported. Both modes and the selected preset are restored.',
+          true,
+        );
       case 'import': {
         const imported = validateTheme(action.theme);
         return commit(

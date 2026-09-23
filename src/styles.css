@@ -2167,3 +2167,17 @@ input {
   background: #fff;
   color: #263e2d;
 }
+
+.review-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; }
+.review-links a { color: #305c45; text-underline-offset: 4px; }
+.review-links a:focus-visible { outline: 2px solid #305c45; outline-offset: 4px; }
+
+/* Keep explanations from becoming an intrinsic-width third column. */
+.export-section { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.export-section > * { min-width: 0; }
+.export-actions { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; }
+.export-actions small { grid-column: 1 / -1; text-align: left; }
+@media (max-width: 620px) {
+  .export-section { grid-template-columns: minmax(0, 1fr); }
+  .export-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
